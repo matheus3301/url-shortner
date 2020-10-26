@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortner</title>
+  </head>
+  <body>
+    <h1>Create your link here!</h1>
+    <form onsubmit="submitForm(event)" method="POST" action="link">
+      <input type="text" name="to" id="to" required />
+      <input type="text" name="slug" id="slug" />
+      <button type="submit">Create!</button>
+    </form>
+    <div id="response"></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      async function submitForm(e) {
+        e.preventDefault();
+
+        let to = document.getElementById('to').value;
+        let slug = document.getElementById('slug').value;
+
+        try {
+          const response = await axios.post('/link', {
+            to,
+            slug,
+          });
+          console.log(response.data.to);
+
+          document.getElementById('to').value = '';
+          document.getElementById('slug').value = '';
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>
